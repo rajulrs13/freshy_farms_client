@@ -1,15 +1,36 @@
 <template>
   <v-app>
-    <v-app-bar color="success" app dark clipped-left>
+    <v-app-bar color="primary" app dark clipped-left>
+      <!-- <template v-slot:img="{ props }">
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+        ></v-img>
+      </template>-->
       <router-link :disabled="loading" to="/" style="text-decoration:none;">
-        <span class="font-weight-regular title white--text">Freshy Farms</span>
+        <!-- <span class="font-weight-regular title white--text">Freshy Farms</span> -->
+        <img :src="logo" height="50" width="77" @click="$vuetify.goTo('#home', {duration: 1000,
+          offset: 0,
+          easing: 'easeOutQuad',})"/>
       </router-link>
 
       <v-spacer></v-spacer>
 
-      <!-- <span class="font-weight-light white--text mx-3">Products</span>
+      <span
+        class="font-weight-light white--text mx-3"
+        v-if="!$vuetify.breakpoint.xs && $route.path == '/'"
+        @click="$vuetify.goTo('#prods', {duration: 1000,
+          offset: 0,
+          easing: 'easeOutQuad',})"
+      >Products</span>
 
-      <span class="font-weight-light white--text mx-3">About</span>-->
+      <span
+        class="font-weight-light white--text mx-3"
+        v-if="!$vuetify.breakpoint.xs && $route.path == '/'"
+        @click="$vuetify.goTo('#about', {duration: 1000,
+          offset: 0,
+          easing: 'easeOutQuad',})"
+      >About</span>
       <div v-if="$route.path != '/checkout' && $route.path != '/order'">
         <v-badge :content="items_in_cart" :value="items_in_cart" color="orange" overlap>
           <v-icon class="white--text" @click="toggleCart()">mdi-cart</v-icon>
@@ -17,7 +38,7 @@
       </div>
     </v-app-bar>
 
-    <v-main>
+    <v-main id="home">
       <v-dialog v-model="prompt" persistent max-width="290">
         <v-card>
           <v-card-title class="headline">New Version</v-card-title>
@@ -44,32 +65,35 @@
       </div>-->
       <router-view></router-view>
     </v-main>
-    <v-footer padless app color="success" style="height:auto" tile>
+    <v-footer padless app color="primary" style="height:auto" tile>
       <v-col class="text-left" cols="5">
         <span class="white--text caption ml-2">© Freshy Farms</span>
       </v-col>
       <v-col class="text-center" cols="2">
         <!-- <v-btn class="white--text" icon> -->
-        <v-icon class="white--text" size="16">mdi-whatsapp</v-icon>
+        <span class="white--text text-caption" v-if="!$vuetify.breakpoint.xs">Contact on</span>
+        <a href="//api.whatsapp.com/send?phone=917428287871&text=Hi Freshy Farms, Whatsup!"><v-icon class="white--text" size="24" color="green" right>mdi-whatsapp</v-icon></a>
         <!-- </v-btn> -->
       </v-col>
       <v-col class="text-right" cols="5">
         <!-- <v-btn v-for="icon in icons" :key="icon" class="white--text" icon> -->
-        <v-icon class="white--text ml-1" size="16">mdi-facebook</v-icon>
-        <v-icon class="white--text ml-1" size="16">mdi-twitter</v-icon>
-        <v-icon class="white--text ml-1" size="16">mdi-linkedin</v-icon>
-        <v-icon class="white--text ml-1" size="16">mdi-instagram</v-icon>
+        <span class="white--text text-caption ml-2" v-if="!$vuetify.breakpoint.xs">Follow us</span>
+        <v-icon class="white--text ml-1" size="24" color="blue" dark>mdi-facebook</v-icon>
+        <v-icon class="white--text ml-1" size="24" color="pink">mdi-instagram</v-icon>
       </v-col>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import logo from "./assets/logo.png";
+import * as easings from 'vuetify/es5/services/goto/easing-patterns'
+import logo from "./assets/logo_shadow.png";
+// import backImg from "./assets/backImg2.png";
 export default {
   name: "App",
   data: () => ({
     logo: logo,
+    // backImg:backImg,
     drawer: false,
     prompt: false,
   }),

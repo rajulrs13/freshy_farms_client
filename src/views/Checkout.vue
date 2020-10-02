@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="8" offset-sm="2">
         <v-stepper v-model="e6" vertical class="elevation-0">
-          <v-stepper-step color="success" :complete="e6 > 1" step="1">Billing Information</v-stepper-step>
+          <v-stepper-step color="accent" :complete="e6 > 1" step="1">Billing Information</v-stepper-step>
           <v-stepper-content step="1">
             <v-form @submit.prevent="step1" ref="form1" v-model="form1_valid">
               <v-card flat>
@@ -11,7 +11,7 @@
                 <v-row>
                   <v-col cols="6" sm="3">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       :rules="[rules.required]"
@@ -21,7 +21,7 @@
                   </v-col>
                   <v-col cols="6" sm="3">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       :rules="[rules.required]"
@@ -31,7 +31,7 @@
                   </v-col>
                   <v-col cols="6" sm="3">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       :rules="[rules.required, rules.email]"
@@ -41,7 +41,7 @@
                   </v-col>
                   <v-col cols="6" sm="3">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       type="number"
@@ -55,7 +55,7 @@
                 <v-row>
                   <v-col cols="12" sm="12">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       :rules="[rules.required]"
@@ -65,7 +65,7 @@
                   </v-col>
                   <v-col cols="12" sm="4">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       :rules="[rules.required]"
@@ -75,7 +75,7 @@
                   </v-col>
                   <v-col cols="12" sm="4">
                     <v-select
-                      color="success"
+                      color="accent"
                       :items="states"
                       item-text="state"
                       dense
@@ -87,7 +87,7 @@
                   </v-col>
                   <v-col cols="12" sm="4">
                     <v-text-field
-                      color="success"
+                      color="accent"
                       outlined
                       dense
                       v-model="pincode"
@@ -97,13 +97,13 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="success" type="submit" :disabled="!form1_valid">Continue</v-btn>
-              <!-- <v-btn color="success" @click="e6 = 2">Continue</v-btn> -->
+              <v-btn color="accent" type="submit" :disabled="!form1_valid">Continue</v-btn>
+              <!-- <v-btn color="accent" @click="e6 = 2">Continue</v-btn> -->
               <v-btn text @click="returnToCart()">Back</v-btn>
             </v-form>
           </v-stepper-content>
 
-          <v-stepper-step color="success" :complete="e6 > 2" step="2">Payment & Shipping</v-stepper-step>
+          <v-stepper-step color="accent" :complete="e6 > 2" step="2">Payment & Shipping</v-stepper-step>
 
           <v-stepper-content step="2">
             <v-form @submit.prevent="step2" ref="form2" v-model="form2_valid">
@@ -111,7 +111,7 @@
                 <div>
                   <span>Payment Methods</span>
                   <v-radio-group v-model="payment_mode" :rules="[rules.required]">
-                    <v-radio color="success" label="Cash On Delivery" value="Cash On Delivery"></v-radio>
+                    <v-radio color="accent" label="Cash On Delivery" value="Cash On Delivery"></v-radio>
                   </v-radio-group>
                 </div>
                 <div>
@@ -119,24 +119,24 @@
                   <span>Delivery Type</span>
                   <v-radio-group v-model="delivery_type" :rules="[rules.required]">
                     <v-radio
-                      color="success"
+                      color="accent"
                       :label="'Standard Delivery (₹' + standard_shipping_fee + ', ' + standard_shipping_days + ' Days)'"
                       value="Standard Delivery"
                     ></v-radio>
                     <v-radio
-                      color="success"
+                      color="accent"
                       :label="'Express Delivery (₹' + express_shipping_fee + ', ' + express_shipping_days + ' Days)'"
                       value="Express Delivery"
                     ></v-radio>
                   </v-radio-group>
                 </div>
               </v-card>
-              <v-btn color="success" type="submit" :disabled="!form2_valid">Continue</v-btn>
+              <v-btn color="accent" type="submit" :disabled="!form2_valid">Continue</v-btn>
               <v-btn text @click="backStep(1)">Back</v-btn>
             </v-form>
           </v-stepper-content>
 
-          <v-stepper-step color="success" :complete="e6 > 3" step="3">Confirmation</v-stepper-step>
+          <v-stepper-step color="accent" :complete="e6 > 3" step="3">Confirmation</v-stepper-step>
 
           <v-stepper-content step="3">
             <v-card flat>
@@ -151,11 +151,17 @@
                   hide-default-footer
                   class="elevation-0"
                 >
+                  <template v-slot:item.weight="{ item }">
+                    <span>{{item.weight_price.weight}}</span>
+                  </template>
                   <template v-slot:item.sale_price="{ item }">
-                    <span>₹{{item.sale_price}}</span>
+                    <span>₹{{item.weight_price.sale_price}}</span>
+                  </template>
+                  <template v-slot:item.cart_quantity="{ item }">
+                    <span>{{item.weight_price.cart_quantity}}</span>
                   </template>
                   <template v-slot:item.subtotal="{ item }">
-                    <span>₹{{item.sale_price * item.cart_quantity}}</span>
+                    <span>₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}</span>
                   </template>
                   <template v-slot:body.append="{ headers }">
                     <tr>
@@ -163,14 +169,14 @@
                       <td :colspan="1">
                         <b>Shipping Charges</b>
                       </td>
-                      <td :colspan="2" style="text-align:center"></td>
+                      <td :colspan="3" style="text-align:center"></td>
                       <td :colspan="1" style="text-align:center">
                         <b>₹{{delivery_type == 'Standard Delivery' ? standard_shipping_fee : express_shipping_fee}}</b>
                       </td>
                     </tr>
                     <tr>
                       <!-- <td :colspan="$vuetify.breakpoint.xs == true ? 1 : 2"> -->
-                      <td :colspan="2">
+                      <td :colspan="3">
                         <b>Totals</b>
                       </td>
                       <td :colspan="1" style="text-align:center">
@@ -187,27 +193,31 @@
                 <v-card class="mx-auto" max-width="344" v-for="(item,i) in cart" :key="i" flat>
                   <v-card-actions>
                     <v-btn icon small @click="toggleItemVisibility(item)">
-                      <v-icon small>{{ item.show ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
+                      <v-icon small>{{ item.weight_price.show ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
                     </v-btn>
                     <v-spacer></v-spacer>
                     <span class="text-button">{{item.name}}</span>
                     <v-spacer></v-spacer>
 
-                    <span class="text-button">₹{{item.sale_price * item.cart_quantity}}&nbsp;</span>
+                    <span class="text-button">₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}&nbsp;</span>
                   </v-card-actions>
 
                   <v-expand-transition>
-                    <div v-show="item.show">
+                    <div v-show="item.weight_price.show">
                       <v-divider></v-divider>
 
                       <v-card-text>
                         <div class="d-flex justify-space-between">
+                          <span class="text-subtitle-1">Weight</span>
+                          <span>₹{{item.weight_price.weight}}</span>
+                        </div>
+                        <div class="d-flex justify-space-between">
                           <span class="text-subtitle-1">Price</span>
-                          <span>₹{{item.sale_price}}</span>
+                          <span>₹{{item.weight_price.sale_price}}</span>
                         </div>
                         <div class="d-flex justify-space-between">
                           <span class="text-subtitle-1">Quantity</span>
-                          <span>&nbsp;{{item.cart_quantity}}&nbsp;</span>
+                          <span>&nbsp;{{item.weight_price.cart_quantity}}&nbsp;</span>
                         </div>
                       </v-card-text>
                     </div>
@@ -263,7 +273,7 @@
                 <div>
                   <br />
                   <span>Delivery Details</span>
-                  <v-chip class="ma-2" small color="success" label outlined>
+                  <v-chip class="ma-2" small color="accent" label outlined>
                     <v-icon
                       left
                     >{{delivery_type == 'Standard Delivery' ? 'mdi-truck' : 'mdi-truck-fast'}}</v-icon>
@@ -282,7 +292,7 @@
                 <div>
                   <br />
                   <span>Payment Method</span>
-                  <v-chip class="ma-2" small color="success" label outlined>
+                  <v-chip class="ma-2" small color="accent" label outlined>
                     <v-icon
                       left
                     >{{payment_mode == 'Cash On Delivery' ? 'mdi-cash-100' : 'mdi-credit-card-outline'}}</v-icon>
@@ -325,7 +335,7 @@
                   <div>
                     <br />
                     <span>Delivery Details</span>
-                    <v-chip class="ma-2" small color="success" label outlined>
+                    <v-chip class="ma-2" small color="accent" label outlined>
                       <v-icon
                         left
                       >{{delivery_type == 'Standard Delivery' ? 'mdi-truck' : 'mdi-truck-fast'}}</v-icon>
@@ -344,7 +354,7 @@
                   <div>
                     <br />
                     <span>Payment Method</span>
-                    <v-chip class="ma-2" small color="success" label outlined>
+                    <v-chip class="ma-2" small color="accent" label outlined>
                       <v-icon
                         left
                       >{{payment_mode == 'Cash On Delivery' ? 'mdi-cash-100' : 'mdi-credit-card-outline'}}</v-icon>
@@ -362,7 +372,7 @@
               </div>
             </v-card>
             <br />
-            <v-btn color="success" @click="placeOrder()">Place Order</v-btn>
+            <v-btn color="accent" @click="placeOrder()">Place Order</v-btn>
             <v-btn text @click="backStep(2)">Back</v-btn>
           </v-stepper-content>
         </v-stepper>
@@ -406,6 +416,12 @@ export default {
           align: "start",
           sortable: false,
           value: "name",
+        },
+        {
+          text: "Weight",
+          align: "center",
+          sortable: false,
+          value: "weight",
         },
         {
           text: "Price",

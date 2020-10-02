@@ -20,7 +20,7 @@
             </v-row>
             <v-row>
               <v-col cols="10" offset="1">
-                <span>Freshy Farm is committed to provide fresh and good quality products at your doorstep straight from our farms.</span>
+                <span>At freshy farms, we bring you the native taste of spices, herbs, dry fruits and many other fresh organic products directly from the farms at unbelievably competitive prices. Satisfy your taste buds with our Naturally grown and selectively picked products.</span>
               </v-col>
             </v-row>
           </v-col>
@@ -32,26 +32,31 @@
             </v-row>
             <v-row>
               <v-col cols="2" class="text-right">
-                <v-icon color="success">mdi-phone</v-icon>
+                <v-icon color="accent">mdi-phone</v-icon>
               </v-col>
               <v-col cols="9">
-                <span>+91 8899889988</span>
+                <a href="tel:+917428287871" style="text-decoration:none; color:black">
+                  <span>+91 7428287871</span>
+                </a>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="2" class="text-right">
-                <v-icon color="success">mdi-email</v-icon>
+                <v-icon color="accent">mdi-email</v-icon>
               </v-col>
               <v-col cols="9">
-                <span>freshyfarms@gmail.com</span>
+                <a href="mailto:contact@freshyfarms.com?subject=Contact%20Freshy%20Farms&body=Hello,%20I%20would%20like%20to%20know%20more%20about%20Freshy%20Farms." style="text-decoration:none; color:black">
+                  <span>contact@freshyfarms.com</span>
+                </a>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="2" class="text-right">
-                <v-icon color="success">mdi-map-marker</v-icon>
+                <v-icon color="accent">mdi-map-marker</v-icon>
               </v-col>
               <v-col cols="9">
-                <span>D-52, Laxmi Nagar, New Delhi 110092</span>
+                <a href="https://www.google.co.in/maps/@28.6323779,77.2782268,17.92z" style="text-decoration:none; color:black" target="_blank" >
+                <span>D-52, Laxmi Nagar, New Delhi 110092</span></a>
               </v-col>
             </v-row>
           </v-col>

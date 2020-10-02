@@ -4,6 +4,7 @@ import store from '../store/index'
 import Home from '../views/Home.vue'
 import Checkout from '../views/Checkout.vue'
 import Order from '../views/Order.vue'
+import Product from '../views/Product.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,11 @@ Vue.use(VueRouter)
     name: 'Order',
     component: Order,
     beforeEnter:orderPlacedCheck
+  },
+  {
+    path: '/product/:id',
+    name: 'Product',
+    component: Product,
   },
   {
     path: '/checkout',

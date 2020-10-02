@@ -4,7 +4,7 @@
       v-model="dialog"
       :fullscreen="$vuetify.breakpoint.xs ? true : false"
       :hide-overlay="$vuetify.breakpoint.xs ? true : false"
-      max-width="700"
+      max-width="800"
       transition="dialog-bottom-transition"
     >
       <v-card class="elevation-12">
@@ -39,7 +39,18 @@
               </div>
             </v-col>
             <v-col cols="12" sm="10">
-              <v-img height="200" :src="productData.img"></v-img>
+              <v-carousel
+                continuous
+                delimiter-icon="mdi-minus"
+                hide-delimiters
+                cycle
+                :show-arrows="true"
+                hide-delimiter-background
+                height="235"
+              >
+                <v-carousel-item v-for="(img, i) in productData.imgs" :key="i" :src="img"></v-carousel-item>
+              </v-carousel>
+              <!-- <v-img height="200" :src="productData.img"></v-img> -->
             </v-col>
             <v-col cols="12" sm="5" order-sm="3">
               <v-row>

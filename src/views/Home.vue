@@ -1,8 +1,8 @@
 <template>
   <div>
-    <app-deals></app-deals>
-    <app-products></app-products>
-    <app-about></app-about>
+    <app-deals id="home"></app-deals>
+    <app-products id="prods"></app-products>
+    <app-about id="about"></app-about>
     <app-cart></app-cart>
   </div>
 </template>

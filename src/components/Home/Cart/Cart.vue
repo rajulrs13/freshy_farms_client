@@ -21,19 +21,22 @@
                     hide-default-footer
                     class="elevation-0"
                   >
+                  <template v-slot:item.weight="{ item }">
+                      <span>{{item.weight_price.weight}}</span>
+                    </template>
                     <template v-slot:item.cart_quantity="{ item }">
                       <v-icon small color="error" @click="decreaseQuantity(item)">mdi-minus</v-icon>
-                      <span>&nbsp;{{item.cart_quantity}}&nbsp;</span>
+                      <span>&nbsp;{{item.weight_price.cart_quantity}}&nbsp;</span>
                       <v-icon small color="success" @click="increaseQuantity(item)">mdi-plus</v-icon>
                     </template>
                     <template v-slot:item.sale_price="{ item }">
-                      <span>₹{{item.sale_price}}</span>
+                      <span>₹{{item.weight_price.sale_price}}</span>
                     </template>
                     <template v-slot:item.delete="{ item }">
                       <v-icon small color="error" @click="deleteFromCart(item)">mdi-delete</v-icon>
                     </template>
                     <template v-slot:item.subtotal="{ item }">
-                      <span>₹{{item.sale_price * item.cart_quantity}}</span>
+                      <span>₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}</span>
                     </template>
                     <template v-slot:body.append="{ headers }">
                       <tr>
@@ -52,7 +55,7 @@
                     </template>
                   </v-data-table>
                   <div class="d-flex justify-center">
-                    <v-btn class="success" @click="checkout()">Checkout</v-btn>
+                    <v-btn class="accent" @click="checkout()">Checkout</v-btn>
                   </div>
                 </div>
                 <div v-else>
@@ -62,27 +65,27 @@
 
                       <v-spacer></v-spacer>
 
-                      <span class="text-button">₹{{item.sale_price * item.cart_quantity}}&nbsp;</span>
+                      <span class="text-button">₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}&nbsp;</span>
 
                       <v-btn icon @click="toggleItemVisibility(item)">
-                        <v-icon>{{ item.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                        <v-icon>{{ item.weight_price.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
 
                     <v-expand-transition>
-                      <div v-show="item.show">
+                      <div v-show="item.weight_price.show">
                         <v-divider></v-divider>
 
                         <v-card-text>
                           <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Price</span>
-                            <span>₹{{item.sale_price}}</span>
+                            <span>₹{{item.weight_price.sale_price}}</span>
                           </div>
                           <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Quantity</span>
                             <span class="text-subtitle-1"></span>
                             <v-icon small color="error" @click="decreaseQuantity(item)">mdi-minus</v-icon>
-                            <span>&nbsp;{{item.cart_quantity}}&nbsp;</span>
+                            <span>&nbsp;{{item.weight_price.cart_quantity}}&nbsp;</span>
                             <v-icon small color="success" @click="increaseQuantity(item)">mdi-plus</v-icon>
                           </div>
                           <br />
@@ -103,7 +106,7 @@
                   </div>
                   <br />
                   <div>
-                    <v-btn block @click="checkout()" class="success">Checkout</v-btn>
+                    <v-btn block @click="checkout()" class="accent">Checkout</v-btn>
                   </div>
                 </div>
               </div>
@@ -136,6 +139,12 @@ export default {
           align: "start",
           sortable: false,
           value: "name",
+        },
+        {
+          text: "Weight",
+          align: "center",
+          sortable: false,
+          value: "weight",
         },
         {
           text: "Price",
@@ -196,22 +205,24 @@ export default {
   methods: {
     increaseQuantity(productData) {
       this.$store.commit("updatePermanentQuantity", {
-        ...productData,
-        cart_quantity: productData.cart_quantity + 1,
-        temporary_quantity: productData.cart_quantity - 1,
+        product_id: productData.id,
+        selected_weight_price: productData.weight_price.id,
+        cart_quantity: productData.weight_price.cart_quantity + 1,
+        temporary_quantity: productData.weight_price.cart_quantity + 1,
       });
     },
     decreaseQuantity(productData) {
-      if (productData.cart_quantity > 1) {
+      if (productData.weight_price.cart_quantity > 1) {
         this.$store.commit("updatePermanentQuantity", {
-          ...productData,
-          cart_quantity: productData.cart_quantity - 1,
-          temporary_quantity: productData.cart_quantity - 1,
+          product_id: productData.id,
+          selected_weight_price: productData.weight_price.id,
+          cart_quantity: productData.weight_price.cart_quantity - 1,
+          temporary_quantity: productData.weight_price.cart_quantity - 1,
         });
       }
     },
     deleteFromCart(productData) {
-      this.$store.commit("deleteFromCart", productData);
+      this.$store.commit("deleteFromActualCart", productData);
     },
     toggleItemVisibility(productData) {
       this.$store.commit("toggleItemVisibility", productData);
