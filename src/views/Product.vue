@@ -1,10 +1,10 @@
 <template>
-  <v-container fluid v-if="productData != null">
+  <v-container fluid v-if="productData != null" id="productdetails">
     <!-- <v-row justify="center" v-if="$vuetify.breakpoint.xs"> -->
     <v-row justify="center">
       <v-col cols="12">
         <div class="d-flex justify-space-between">
-          <span class="text-h5">{{productData.name}}</span>
+          <span class="text-h5">{{ productData.name }}</span>
         </div>
       </v-col>
 
@@ -18,7 +18,11 @@
           hide-delimiter-background
           :height="$vuetify.breakpoint.xs ? 250 : 500"
         >
-          <v-carousel-item v-for="(img, i) in productData.imgs" :key="i" :src="img"></v-carousel-item>
+          <v-carousel-item
+            v-for="(img, i) in productData.imgs"
+            :key="i"
+            :src="img"
+          ></v-carousel-item>
         </v-carousel>
         <!-- <v-img height="200" :src="productData.img"></v-img> -->
       </v-col>
@@ -41,7 +45,7 @@
                 v-for="item in productData.weight_price"
                 :key="item.id"
               >
-                <span>{{item.weight}}</span>
+                <span>{{ item.weight }}</span>
               </v-btn>
             </v-btn-toggle>
           </div>
@@ -52,11 +56,23 @@
             <span class="font-weight-light text-button">Price</span>
           </div>
           <div class="text-subtitle-1 success--text align-self-center">
-            ₹{{productData.weight_price[productData.selected_product_weight].sale_price}}
+            ₹{{
+              productData.weight_price[productData.selected_product_weight]
+                .sale_price
+            }}
             <span
               class="error--text subtitle-2 text-decoration-line-through"
-              v-if="productData.weight_price[productData.selected_product_weight].sale_price != productData.weight_price[productData.selected_product_weight].cost_price"
-            >₹{{productData.weight_price[productData.selected_product_weight].cost_price}}</span>
+              v-if="
+                productData.weight_price[productData.selected_product_weight]
+                  .sale_price !=
+                productData.weight_price[productData.selected_product_weight]
+                  .cost_price
+              "
+              >₹{{
+                productData.weight_price[productData.selected_product_weight]
+                  .cost_price
+              }}</span
+            >
           </div>
           <div></div>
         </div>
@@ -67,13 +83,23 @@
               label="Quantity"
               readonly
               min="1"
-              :value="productData.weight_price[productData.selected_product_weight].temporary_quantity"
+              :value="
+                productData.weight_price[productData.selected_product_weight]
+                  .temporary_quantity
+              "
               dense
               type="number"
               color="success"
             >
-              <v-icon slot="append-outer" color="success" @click="increaseQuantity()">mdi-plus</v-icon>
-              <v-icon slot="prepend" color="error" @click="decreaseQuantity()">mdi-minus</v-icon>
+              <v-icon
+                slot="append-outer"
+                color="success"
+                @click="increaseQuantity()"
+                >mdi-plus</v-icon
+              >
+              <v-icon slot="prepend" color="error" @click="decreaseQuantity()"
+                >mdi-minus</v-icon
+              >
             </v-text-field>
             <div class="d-flex justify-space-around" v-if="in_cart_status">
               <v-btn class="error" @click="deleteFromCart()">
@@ -91,7 +117,9 @@
             </div>
           </div>
           <div v-else>
-            <v-chip small outlined class="my-2" color="error">Out of Stock</v-chip>
+            <v-chip small outlined class="my-2" color="error"
+              >Out of Stock</v-chip
+            >
           </div>
         </div>
 
@@ -99,7 +127,7 @@
           <v-icon size="24" color="accent" left>mdi-image-text</v-icon>
           <span class="font-weight-light text-button">Description</span>
           <br />
-          <span class="caption">{{productData.description}}</span>
+          <span class="caption">{{ productData.description }}</span>
         </div>
         <div class="d-flex justify-space-between mx-2">
           <div class="align-self-center">
@@ -118,9 +146,11 @@
                 :length="Math.ceil(productData.rating)"
               ></v-rating>
             </div>
-            <span
-              class="grey--text caption mx-4"
-            >{{(productData.rating).toFixed(1)}} ({{productData.rated_by_people}})</span>
+            <span class="grey--text caption mx-4"
+              >{{ productData.rating.toFixed(1) }} ({{
+                productData.rated_by_people
+              }})</span
+            >
           </div>
         </div>
       </v-col>
@@ -147,7 +177,7 @@
                       v-for="item in productData.weight_price"
                       :key="item.id"
                     >
-                      <span>{{item.weight}}</span>
+                      <span>{{ item.weight }}</span>
                     </v-btn>
                   </v-btn-toggle>
                 </div>
@@ -162,11 +192,27 @@
               </v-col>
               <v-col cols="6" class="text-center">
                 <div class="text-subtitle-1 success--text align-self-center">
-                  ₹{{productData.weight_price[productData.selected_product_weight].sale_price}}
+                  ₹{{
+                    productData.weight_price[
+                      productData.selected_product_weight
+                    ].sale_price
+                  }}
                   <span
                     class="error--text subtitle-2 text-decoration-line-through"
-                    v-if="productData.weight_price[productData.selected_product_weight].sale_price != productData.weight_price[productData.selected_product_weight].cost_price"
-                  >₹{{productData.weight_price[productData.selected_product_weight].cost_price}}</span>
+                    v-if="
+                      productData.weight_price[
+                        productData.selected_product_weight
+                      ].sale_price !=
+                      productData.weight_price[
+                        productData.selected_product_weight
+                      ].cost_price
+                    "
+                    >₹{{
+                      productData.weight_price[
+                        productData.selected_product_weight
+                      ].cost_price
+                    }}</span
+                  >
                 </div>
               </v-col>
             </v-row>
@@ -184,13 +230,27 @@
                   label="Quantity"
                   readonly
                   min="1"
-                  :value="productData.weight_price[productData.selected_product_weight].temporary_quantity"
+                  :value="
+                    productData.weight_price[
+                      productData.selected_product_weight
+                    ].temporary_quantity
+                  "
                   dense
                   type="number"
                   color="success"
                 >
-                  <v-icon slot="append-outer" color="success" @click="increaseQuantity()">mdi-plus</v-icon>
-                  <v-icon slot="prepend" color="error" @click="decreaseQuantity()">mdi-minus</v-icon>
+                  <v-icon
+                    slot="append-outer"
+                    color="success"
+                    @click="increaseQuantity()"
+                    >mdi-plus</v-icon
+                  >
+                  <v-icon
+                    slot="prepend"
+                    color="error"
+                    @click="decreaseQuantity()"
+                    >mdi-minus</v-icon
+                  >
                 </v-text-field>
                 <div class="d-flex justify-space-around" v-if="in_cart_status">
                   <v-btn class="error" @click="deleteFromCart()">
@@ -208,7 +268,9 @@
                 </div>
               </div>
               <div v-else>
-                <v-chip small outlined class="my-2" color="error">Out of Stock</v-chip>
+                <v-chip small outlined class="my-2" color="error"
+                  >Out of Stock</v-chip
+                >
               </div>
               <!-- <div></div> -->
             </div>
@@ -219,7 +281,7 @@
             <v-icon size="24" color="accent" left>mdi-image-text</v-icon>
             <span class="font-weight-light text-button">Description</span>
             <br />
-            <div class="caption">{{productData.description}}</div>
+            <div class="caption">{{ productData.description }}</div>
           </v-col>
         </v-row>
         <v-row>
@@ -241,9 +303,11 @@
                     :length="Math.ceil(productData.rating)"
                   ></v-rating>
                 </div>
-                <span
-                  class="grey--text caption mx-4"
-                >{{(productData.rating).toFixed(1)}} ({{productData.rated_by_people}})</span>
+                <span class="grey--text caption mx-4"
+                  >{{ productData.rating.toFixed(1) }} ({{
+                    productData.rated_by_people
+                  }})</span
+                >
               </div>
             </div>
           </v-col>
@@ -262,7 +326,9 @@
             <br />
             <span class="text-button">Not Found</span>
             <br />
-            <span class="text-button">The page you were looking for is not found.</span>
+            <span class="text-button"
+              >The page you were looking for is not found.</span
+            >
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -279,6 +345,13 @@
 export default {
   data() {
     return {};
+  },
+  mounted() {
+    this.$vuetify.goTo("#productdetails", {
+      duration: 1000,
+      offset: 0,
+      easing: "easeOutQuad",
+    });
   },
   computed: {
     in_cart_status() {
