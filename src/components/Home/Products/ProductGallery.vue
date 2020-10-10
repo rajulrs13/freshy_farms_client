@@ -9,7 +9,7 @@
               <v-img height="250" :src="product.imgs[0]"></v-img>
               <v-card-text>
                 <div class="text-h5 font-weight-regular">{{product.name}}</div>
-                <div class="font-weight-light">{{product.quantity}}</div>
+                <!-- <div class="font-weight-light">{{product.quantity}}</div> -->
 
                 <div v-if="product.in_stock">
                   <span class="my-2 text-h6 success--text">₹{{product.weight_price[0].sale_price}}</span>{{space1}}

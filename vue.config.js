@@ -4,13 +4,13 @@ module.exports = {
   ],
   pwa: {
     name: 'Freshy Farms',
-    themeColor: "#4CAF50",
-    msTileColor: "#4CAF50",
+    themeColor: "#263238",
+    msTileColor: "#263238",
     appleMobileWebAppCache: "yes",
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: '#4CAF50',
+    appleMobileWebAppStatusBarStyle: '#263238',
     manifestOptions: {
-      background_color: "#4CAF50",
+      background_color: "#263238",
       short_name: 'Freshy Farms',
       start_url: '.',
       display: 'standalone'

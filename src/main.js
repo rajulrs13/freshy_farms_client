@@ -4,6 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import wb from "./registerServiceWorker";
+import AlertComponent from "./components/Shared/Alert.vue";
+Vue.component("alert-component", AlertComponent);
+
+import Cart from "./components/Home/Cart/Cart.vue";
+Vue.component("app-cart", Cart);
 
 Vue.prototype.$workbox = wb;
 

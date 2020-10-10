@@ -1,5 +1,7 @@
 <template>
   <div>
+    <alert-component v-if="error" :text="error.message" :color="'error'"></alert-component>
+    <alert-component v-if="success" :text="success.message" :color="'success'"></alert-component>
     <v-dialog v-model="visibility" max-width="700">
       <v-card class="elevation-12">
         <v-container fluid>
@@ -192,15 +194,15 @@ export default {
     cartTotalQuantity() {
       return this.$store.getters.cartTotalQuantity;
     },
-    // loading() {
-    //   return this.$store.getters.loading;
-    // },
-    // success() {
-    //   return this.$store.getters.success;
-    // },
-    // error() {
-    //   return this.$store.getters.error;
-    // }
+    loading() {
+      return this.$store.getters.loading;
+    },
+    success() {
+      return this.$store.getters.success;
+    },
+    error() {
+      return this.$store.getters.error;
+    }
   },
   methods: {
     increaseQuantity(productData) {
@@ -222,7 +224,7 @@ export default {
       }
     },
     deleteFromCart(productData) {
-      this.$store.commit("deleteFromActualCart", productData);
+      this.$store.dispatch("deleteFromActualCart", productData);
     },
     toggleItemVisibility(productData) {
       this.$store.commit("toggleItemVisibility", productData);
@@ -231,6 +233,18 @@ export default {
       this.$store.commit("collapseAllShowButtons");
       this.$store.commit("toggleCartVisibility", false);
       this.$router.push("/checkout");
+    },
+  },
+  watch: {
+    error(err) {
+      if (!!err) {
+        setTimeout(() => this.$store.commit("clearError"), 3000);
+      }
+    },
+    success(con) {
+      if (!!con) {
+        setTimeout(() => this.$store.commit("clearSuccess"), 4000);
+      }
     },
   },
 };

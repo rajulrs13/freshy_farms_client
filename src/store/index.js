@@ -1,7 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { db } from "@/plugins/firebase";
+import * as firebase from "firebase/app";
+import router from "../router";
 
 Vue.use(Vuex);
+
+// images
 import elaichi_1 from "../assets/elaichi_1.jpg";
 import elaichi_2 from "../assets/elaichi_2.jpg";
 import elaichi_3 from "../assets/elaichi_3.jpg";
@@ -17,6 +22,7 @@ import black_pepper_3 from "../assets/black_pepper_3.png";
 import black_cardamom_1 from "../assets/black_cardamom_1.jpg";
 import black_cardamom_2 from "../assets/black_cardamom_2.jpg";
 import black_cardamom_3 from "../assets/black_cardamom_3.jpg";
+
 export default new Vuex.Store({
   state: {
     // static
@@ -36,16 +42,11 @@ export default new Vuex.Store({
         id: 1,
         imgs: [cloves_1, cloves_2, cloves_3],
         name: "Whole Cloves (Handpicked)",
-        weight: "50g",
         description:
           "Cloves are the aromatic flower buds of a tree in the family Myrtaceae, Syzygium aromaticum. They are native to the Maluku Islands in Indonesia, and are commonly used as a spice. Cloves are available throughout the year due to different harvest seasons in different countries.",
-        cost_price: 100,
-        sale_price: 90,
         in_stock: true,
         rating: 4.5,
         rated_by_people: 413,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -82,7 +83,6 @@ export default new Vuex.Store({
         id: 2,
         imgs: [elaichi_1, elaichi_2, elaichi_3],
         name: "Cardamom Gold (8mm)",
-        weight: "50g",
         description: `Cardamom is called the 'Queen of Spices'.
           It is indeed one of the most expensive spices and also the most familiar ones
           ever.
@@ -96,8 +96,7 @@ export default new Vuex.Store({
           copper, potassium, calcium, zinc, and phosphorus and vitamins A and C.  
           Our Cardamom is known for its consistency in flavour, aroma and quality, try it
           yourself.`,
-        cost_price: 250,
-        sale_price: 225,
+
         in_stock: true,
         rating: 4.3,
         rated_by_people: 400,
@@ -137,16 +136,12 @@ export default new Vuex.Store({
         id: 3,
         imgs: [elaichi_2, elaichi_1, elaichi_3],
         name: "Cardamom Premium (7-8mm)",
-        weight: "50g",
         description:
           "Cardamom, sometimes cardamon or cardamum, is a spice made from the seeds of several plants in the genera Elettaria and Amomum in the family Zingiberaceae. Both genera are native to the Indian subcontinent and Indonesia.",
-        cost_price: 225,
-        sale_price: 200,
+
         in_stock: true,
         rating: 4.3,
         rated_by_people: 400,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -183,16 +178,12 @@ export default new Vuex.Store({
         id: 4,
         imgs: [black_cardamom_1, black_cardamom_2, black_cardamom_3],
         name: "Big Black Cardamom (Badi Elaichi)",
-        weight: "50g",
         description:
           "Cardamom, sometimes cardamon or cardamum, is a spice made from the seeds of several plants in the genera Elettaria and Amomum in the family Zingiberaceae. Both genera are native to the Indian subcontinent and Indonesia.",
-        cost_price: 100,
-        sale_price: 90,
+
         in_stock: true,
         rating: 4.3,
         rated_by_people: 400,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -229,16 +220,12 @@ export default new Vuex.Store({
         id: 5,
         imgs: [black_pepper_1, black_pepper_2, black_pepper_3],
         name: "Whole Black Pepper",
-        weight: "50g",
         description:
           "Cardamom, sometimes cardamon or cardamum, is a spice made from the seeds of several plants in the genera Elettaria and Amomum in the family Zingiberaceae. Both genera are native to the Indian subcontinent and Indonesia.",
-        cost_price: 80,
-        sale_price: 70,
+
         in_stock: true,
         rating: 4.3,
         rated_by_people: 400,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -275,16 +262,12 @@ export default new Vuex.Store({
         id: 6,
         imgs: [cinnamon_1, cinnamon_2],
         name: "Cinnamon Sticks",
-        weight: "50g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 70,
-        sale_price: 60,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -321,16 +304,12 @@ export default new Vuex.Store({
         id: 7,
         imgs: [cinnamon_3, cinnamon_2, cinnamon_1],
         name: "Cinnamon Powder",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 225,
-        sale_price: 200,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -367,16 +346,12 @@ export default new Vuex.Store({
         id: 8,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Jeera (Cumin Seeds)",
-        weight: "100g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 45,
-        sale_price: 40,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "spices",
         selected_product_weight: 0,
         weight_price: [
@@ -415,16 +390,12 @@ export default new Vuex.Store({
         id: 9,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "California Almonds",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 225,
-        sale_price: 225,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -461,16 +432,12 @@ export default new Vuex.Store({
         id: 10,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Mamra Almonds",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 875,
-        sale_price: 875,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -507,16 +474,12 @@ export default new Vuex.Store({
         id: 11,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Cashews",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 300,
-        sale_price: 300,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -553,16 +516,12 @@ export default new Vuex.Store({
         id: 12,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Walnuts (Giri)",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 475,
-        sale_price: 475,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -599,16 +558,12 @@ export default new Vuex.Store({
         id: 13,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Raisins",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 175,
-        sale_price: 175,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -645,16 +600,12 @@ export default new Vuex.Store({
         id: 14,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Black Raisins",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 200,
-        sale_price: 200,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -691,16 +642,12 @@ export default new Vuex.Store({
         id: 15,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Fruit Mix",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 300,
-        sale_price: 300,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -737,16 +684,12 @@ export default new Vuex.Store({
         id: 16,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Breakfast Mix",
-        weight: "250g",
         description:
           "Cinnamon is a spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
-        cost_price: 300,
-        sale_price: 300,
+
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "dry fruit",
         selected_product_weight: 0,
         weight_price: [
@@ -787,16 +730,12 @@ export default new Vuex.Store({
           "https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2019/05/Baby-dies-honey-769796297.jpg",
         ],
         name: "Honey",
-        weight: "100 g",
         description:
           "Honey is a sweet, viscous food substance made by honey bees. The variety of honey produced by honey bees (the genus Apis) is the best-known, due to its worldwide commercial production and human consumption. Honey is collected from wild bee colonies, or from hives of domesticated bees, a practice known as beekeeping or apiculture.",
-        sale_price: 1000,
-        cost_price: 1500,
+
         in_stock: false,
         rating: 4.0,
         rated_by_people: 413,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "honey",
         selected_product_weight: 0,
         weight_price: [
@@ -837,16 +776,12 @@ export default new Vuex.Store({
           "https://cdn.britannica.com/83/191983-050-9D97C943/saffron-spice-herb.jpg",
         ],
         name: "Combo",
-        weight: "100 g",
         description:
           "Saffron is a spice derived from the flower of Crocus sativus, commonly known as the saffron crocus. The vivid crimson stigma and styles, called threads, are collected and dried for use mainly as a seasoning and colouring agent in food. Saffron has long been the world's most costly spice by weight.",
-        sale_price: 1000,
-        cost_price: 1000,
+
         in_stock: false,
         rating: 4.5,
         rated_by_people: 923,
-        cart_quantity: 0,
-        temporary_quantity: 1,
         category: "combo",
         selected_product_weight: 0,
         weight_price: [
@@ -886,8 +821,25 @@ export default new Vuex.Store({
     standard_shipping_days: 7,
     express_shipping_days: 3,
     order_placed: false,
+    order_id: null,
+
+    // Shared State
+    loading: false,
+    error: null,
+    success: null,
   },
   getters: {
+    // Shared
+    error(state) {
+      return state.error;
+    },
+    loading(state) {
+      return state.loading;
+    },
+    success(state) {
+      return state.success;
+    },
+
     // customer data
     firstname(state) {
       return state.customer_data.firstname;
@@ -1013,6 +965,9 @@ export default new Vuex.Store({
     order_placed(state) {
       return state.order_placed;
     },
+    order_id(state) {
+      return state.order_id;
+    },
   },
   mutations: {
     // customer data
@@ -1133,7 +1088,7 @@ export default new Vuex.Store({
       }
       state.products = cart;
     },
-    placeOrder(state) {
+    placeOrder(state, payload) {
       let cart = [...state.products];
       for (let i = 0; i < cart.length; i++) {
         for (let j = 0; j < cart[i].weight_price.length; j++) {
@@ -1143,11 +1098,94 @@ export default new Vuex.Store({
       }
       state.products = cart;
       state.order_placed = true;
+      state.order_id = payload;
     },
     resetOrderState(state) {
       state.order_placed = false;
+      state.order_id = null;
+    },
+
+    // Shared
+    setLoading(state, payload) {
+      state.loading = payload;
+    },
+    setError(state, payload) {
+      state.error = payload;
+    },
+    clearError(state) {
+      state.error = null;
+    },
+    setSuccess(state, payload) {
+      state.success = payload;
+    },
+    clearSuccess(state) {
+      state.success = null;
     },
   },
-  actions: {},
+  actions: {
+    addToCart({ commit }, payload) {
+      console.log(payload)
+      if (payload.action == "add") {
+        commit("addToCart", payload.productData);
+        commit("setSuccess", {
+          message: payload.productData.name + "["+ payload.productData.weight_price[payload.productData.selected_product_weight].weight+"] added to Cart",
+          status: true,
+        });
+        setTimeout(() => commit("clearSuccess"), 2000);
+      } else {
+        commit("addToCart", payload.productData);
+        commit("setSuccess", { message: "Cart Updated", status: true });
+        setTimeout(() => commit("clearSuccess"), 1000);
+      }
+    },
+    deleteFromCart({ commit }, payload) {
+      commit("deleteFromCart", payload);
+      commit("setError", {
+        message: payload.name + "["+ payload.weight_price[payload.selected_product_weight].weight+"] removed from Cart",
+        status: true,
+      });
+      setTimeout(() => commit("clearError"), 2000);
+    },
+    deleteFromActualCart({ commit }, payload) {
+      console.log(payload)
+      commit("deleteFromActualCart", payload);
+      commit("setError", {
+        message: payload.name + "["+ payload.weight_price.weight+"] removed from Cart",
+        status: true,
+      });
+      setTimeout(() => commit("clearError"), 2000);
+    },
+    placeOrder({ commit }, payload) {
+      // Add a new document in collection "cities"
+      commit('setLoading', true)
+      let order = {
+        ...payload,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        order_status: 0,
+      };
+      db.collection("orders")
+        .add(order)
+        .then(function(docRef) {
+          console.log("Order Placed with Unique Order ID: ", docRef.id);
+          commit("placeOrder", docRef.id);
+          commit('setLoading', false)
+          router.replace("/order");
+          commit("setSuccess", {
+            message: "Order Placed Successfully",
+            status: true,
+          });
+          setTimeout(() => commit("clearSuccess"), 4000);
+        })
+        .catch(function(error) {
+          console.error("Could not place your order. Please try again.", error);
+          commit('setLoading', false)
+          commit("setError", {
+            message: "Could not place your order. Please try again",
+            status: true,
+          });
+          setTimeout(() => commit("clearError"), 4000);
+        });
+    },
+  },
   modules: {},
 });

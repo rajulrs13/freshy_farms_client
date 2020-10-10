@@ -1,5 +1,16 @@
 <template>
   <v-container fluid v-if="productData != null" id="productdetails">
+    <app-cart></app-cart>
+    <alert-component
+      v-if="error"
+      :text="error.message"
+      :color="'error'"
+    ></alert-component>
+    <alert-component
+      v-if="success"
+      :text="success.message"
+      :color="'success'"
+    ></alert-component>
     <!-- <v-row justify="center" v-if="$vuetify.breakpoint.xs"> -->
     <v-row justify="center">
       <v-col cols="12">
@@ -106,12 +117,12 @@
                 <v-icon left>mdi-delete</v-icon>Remove
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn class="accent" @click="addToCart()">
+              <v-btn class="accent" @click="addToCart('update')">
                 <v-icon left>mdi-sync</v-icon>Update
               </v-btn>
             </div>
             <div v-else>
-              <v-btn block class="accent" @click="addToCart()">
+              <v-btn block class="accent" @click="addToCart('add')">
                 <v-icon left>mdi-cart-plus</v-icon>Add To Cart
               </v-btn>
             </div>
@@ -316,6 +327,17 @@
     </v-row>
   </v-container>
   <v-container v-else class="fill-height" fluid>
+    <app-cart></app-cart>
+    <alert-component
+      v-if="error"
+      :text="error.message"
+      :color="'error'"
+    ></alert-component>
+    <alert-component
+      v-if="success"
+      :text="success.message"
+      :color="'success'"
+    ></alert-component>
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <v-card flat>
@@ -348,7 +370,7 @@ export default {
   },
   mounted() {
     this.$vuetify.goTo("#productdetails", {
-      duration: 1000,
+      duration: 0,
       offset: 0,
       easing: "easeOutQuad",
     });
@@ -372,15 +394,27 @@ export default {
       }
       return null;
     },
-    // loading() {
-    //   return this.$store.getters.loading;
-    // },
-    // success() {
-    //   return this.$store.getters.success;
-    // },
-    // error() {
-    //   return this.$store.getters.error;
-    // }
+    loading() {
+      return this.$store.getters.loading;
+    },
+    success() {
+      return this.$store.getters.success;
+    },
+    error() {
+      return this.$store.getters.error;
+    },
+  },
+  watch: {
+    error(err) {
+      if (!!err) {
+        setTimeout(() => this.$store.commit("clearError"), 3000);
+      }
+    },
+    success(con) {
+      if (!!con) {
+        setTimeout(() => this.$store.commit("clearSuccess"), 4000);
+      }
+    },
   },
   methods: {
     setSelectedProductWeight(value) {
@@ -413,11 +447,14 @@ export default {
       }
     },
     deleteFromCart() {
-      this.$store.commit("deleteFromCart", this.productData);
+      this.$store.dispatch("deleteFromCart", this.productData);
       this.dialog = false;
     },
-    addToCart() {
-      this.$store.commit("addToCart", this.productData);
+    addToCart(action) {
+      this.$store.dispatch("addToCart", {
+        action: action,
+        productData: this.productData,
+      });
       this.dialog = false;
     },
   },

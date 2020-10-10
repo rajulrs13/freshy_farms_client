@@ -1,9 +1,13 @@
 <template>
   <v-container fluid>
+    <alert-component v-if="error" :text="error.message" :color="'error'"></alert-component>
+    <alert-component v-if="success" :text="success.message" :color="'success'"></alert-component>
     <v-row>
       <v-col cols="12" sm="8" offset-sm="2">
         <v-stepper v-model="e6" vertical class="elevation-0">
-          <v-stepper-step color="accent" :complete="e6 > 1" step="1">Billing Information</v-stepper-step>
+          <v-stepper-step color="accent" :complete="e6 > 1" step="1"
+            >Billing Information</v-stepper-step
+          >
           <v-stepper-content step="1">
             <v-form @submit.prevent="step1" ref="form1" v-model="form1_valid">
               <v-card flat>
@@ -97,46 +101,76 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="accent" type="submit" :disabled="!form1_valid">Continue</v-btn>
+              <v-btn color="accent" type="submit" :disabled="!form1_valid"
+                >Continue</v-btn
+              >
               <!-- <v-btn color="accent" @click="e6 = 2">Continue</v-btn> -->
               <v-btn text @click="returnToCart()">Back</v-btn>
             </v-form>
           </v-stepper-content>
 
-          <v-stepper-step color="accent" :complete="e6 > 2" step="2">Payment & Shipping</v-stepper-step>
+          <v-stepper-step color="accent" :complete="e6 > 2" step="2"
+            >Payment & Shipping</v-stepper-step
+          >
 
           <v-stepper-content step="2">
             <v-form @submit.prevent="step2" ref="form2" v-model="form2_valid">
               <v-card flat>
                 <div>
                   <span>Payment Methods</span>
-                  <v-radio-group v-model="payment_mode" :rules="[rules.required]">
-                    <v-radio color="accent" label="Cash On Delivery" value="Cash On Delivery"></v-radio>
+                  <v-radio-group
+                    v-model="payment_mode"
+                    :rules="[rules.required]"
+                  >
+                    <v-radio
+                      color="accent"
+                      label="Cash On Delivery"
+                      value="Cash On Delivery"
+                    ></v-radio>
                   </v-radio-group>
                 </div>
                 <div>
                   <br />
                   <span>Delivery Type</span>
-                  <v-radio-group v-model="delivery_type" :rules="[rules.required]">
+                  <v-radio-group
+                    v-model="delivery_type"
+                    :rules="[rules.required]"
+                  >
                     <v-radio
                       color="accent"
-                      :label="'Standard Delivery (₹' + standard_shipping_fee + ', ' + standard_shipping_days + ' Days)'"
+                      :label="
+                        'Standard Delivery (₹' +
+                        standard_shipping_fee +
+                        ', ' +
+                        standard_shipping_days +
+                        ' Days)'
+                      "
                       value="Standard Delivery"
                     ></v-radio>
                     <v-radio
                       color="accent"
-                      :label="'Express Delivery (₹' + express_shipping_fee + ', ' + express_shipping_days + ' Days)'"
+                      :label="
+                        'Express Delivery (₹' +
+                        express_shipping_fee +
+                        ', ' +
+                        express_shipping_days +
+                        ' Days)'
+                      "
                       value="Express Delivery"
                     ></v-radio>
                   </v-radio-group>
                 </div>
               </v-card>
-              <v-btn color="accent" type="submit" :disabled="!form2_valid">Continue</v-btn>
+              <v-btn color="accent" type="submit" :disabled="!form2_valid"
+                >Continue</v-btn
+              >
               <v-btn text @click="backStep(1)">Back</v-btn>
             </v-form>
           </v-stepper-content>
 
-          <v-stepper-step color="accent" :complete="e6 > 3" step="3">Confirmation</v-stepper-step>
+          <v-stepper-step color="accent" :complete="e6 > 3" step="3"
+            >Confirmation</v-stepper-step
+          >
 
           <v-stepper-content step="3">
             <v-card flat>
@@ -152,16 +186,21 @@
                   class="elevation-0"
                 >
                   <template v-slot:item.weight="{ item }">
-                    <span>{{item.weight_price.weight}}</span>
+                    <span>{{ item.weight_price.weight }}</span>
                   </template>
                   <template v-slot:item.sale_price="{ item }">
-                    <span>₹{{item.weight_price.sale_price}}</span>
+                    <span>₹{{ item.weight_price.sale_price }}</span>
                   </template>
                   <template v-slot:item.cart_quantity="{ item }">
-                    <span>{{item.weight_price.cart_quantity}}</span>
+                    <span>{{ item.weight_price.cart_quantity }}</span>
                   </template>
                   <template v-slot:item.subtotal="{ item }">
-                    <span>₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}</span>
+                    <span
+                      >₹{{
+                        item.weight_price.sale_price *
+                        item.weight_price.cart_quantity
+                      }}</span
+                    >
                   </template>
                   <template v-slot:body.append="{ headers }">
                     <tr>
@@ -169,9 +208,15 @@
                       <td :colspan="1">
                         <b>Shipping Charges</b>
                       </td>
-                      <td :colspan="3" style="text-align:center"></td>
-                      <td :colspan="1" style="text-align:center">
-                        <b>₹{{delivery_type == 'Standard Delivery' ? standard_shipping_fee : express_shipping_fee}}</b>
+                      <td :colspan="3" style="text-align: center"></td>
+                      <td :colspan="1" style="text-align: center">
+                        <b
+                          >₹{{
+                            delivery_type == "Standard Delivery"
+                              ? standard_shipping_fee
+                              : express_shipping_fee
+                          }}</b
+                        >
                       </td>
                     </tr>
                     <tr>
@@ -179,27 +224,47 @@
                       <td :colspan="3">
                         <b>Totals</b>
                       </td>
-                      <td :colspan="1" style="text-align:center">
-                        <b>{{cartTotalQuantity}}</b>
+                      <td :colspan="1" style="text-align: center">
+                        <b>{{ cartTotalQuantity }}</b>
                       </td>
-                      <td :colspan="1" style="text-align:center">
-                        <b>₹{{cartTotalPrice + (delivery_type == 'Standard Delivery' ? standard_shipping_fee : express_shipping_fee)}}</b>
+                      <td :colspan="1" style="text-align: center">
+                        <b
+                          >₹{{
+                            cartTotalPrice +
+                            (delivery_type == "Standard Delivery"
+                              ? standard_shipping_fee
+                              : express_shipping_fee)
+                          }}</b
+                        >
                       </td>
                     </tr>
                   </template>
                 </v-data-table>
               </div>
               <div v-else>
-                <v-card class="mx-auto" max-width="344" v-for="(item,i) in cart" :key="i" flat>
+                <v-card
+                  class="mx-auto"
+                  max-width="344"
+                  v-for="(item, i) in cart"
+                  :key="i"
+                  flat
+                >
                   <v-card-actions>
                     <v-btn icon small @click="toggleItemVisibility(item)">
-                      <v-icon small>{{ item.weight_price.show ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
+                      <v-icon small>{{
+                        item.weight_price.show ? "mdi-minus" : "mdi-plus"
+                      }}</v-icon>
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <span class="text-button">{{item.name}}</span>
+                    <span class="text-button">{{ item.name }}</span>
                     <v-spacer></v-spacer>
 
-                    <span class="text-button">₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}&nbsp;</span>
+                    <span class="text-button"
+                      >₹{{
+                        item.weight_price.sale_price *
+                        item.weight_price.cart_quantity
+                      }}&nbsp;</span
+                    >
                   </v-card-actions>
 
                   <v-expand-transition>
@@ -209,15 +274,19 @@
                       <v-card-text>
                         <div class="d-flex justify-space-between">
                           <span class="text-subtitle-1">Weight</span>
-                          <span>₹{{item.weight_price.weight}}</span>
+                          <span>₹{{ item.weight_price.weight }}</span>
                         </div>
                         <div class="d-flex justify-space-between">
                           <span class="text-subtitle-1">Price</span>
-                          <span>₹{{item.weight_price.sale_price}}</span>
+                          <span>₹{{ item.weight_price.sale_price }}</span>
                         </div>
                         <div class="d-flex justify-space-between">
                           <span class="text-subtitle-1">Quantity</span>
-                          <span>&nbsp;{{item.weight_price.cart_quantity}}&nbsp;</span>
+                          <span
+                            >&nbsp;{{
+                              item.weight_price.cart_quantity
+                            }}&nbsp;</span
+                          >
                         </div>
                       </v-card-text>
                     </div>
@@ -229,9 +298,13 @@
 
                     <v-spacer></v-spacer>
 
-                    <span
-                      class="text-button"
-                    >₹{{delivery_type == 'Standard Delivery' ? standard_shipping_fee : express_shipping_fee}}&nbsp;</span>
+                    <span class="text-button"
+                      >₹{{
+                        delivery_type == "Standard Delivery"
+                          ? standard_shipping_fee
+                          : express_shipping_fee
+                      }}&nbsp;</span
+                    >
                     <span></span>
                   </v-card-actions>
                 </v-card>
@@ -241,9 +314,14 @@
 
                     <v-spacer></v-spacer>
 
-                    <span
-                      class="text-button"
-                    >₹{{cartTotalPrice + (delivery_type == 'Standard Delivery' ? standard_shipping_fee : express_shipping_fee)}}&nbsp;</span>
+                    <span class="text-button"
+                      >₹{{
+                        cartTotalPrice +
+                        (delivery_type == "Standard Delivery"
+                          ? standard_shipping_fee
+                          : express_shipping_fee)
+                      }}&nbsp;</span
+                    >
                     <span></span>
                   </v-card-actions>
                 </v-card>
@@ -256,36 +334,50 @@
                 <div>
                   <span class="text-caption">To,</span>
                   <br />
-                  <span class="text-caption">{{firstname}} {{lastname}},</span>
+                  <span class="text-caption"
+                    >{{ firstname }} {{ lastname }},</span
+                  >
                   <br />
-                  <span class="text-caption">{{street_address}}</span>
+                  <span class="text-caption">{{ street_address }}</span>
                   <br />
-                  <span class="text-caption">{{city}}, {{state}},</span>
+                  <span class="text-caption">{{ city }}, {{ state }},</span>
                   <br />
                   <span class="text-caption">India</span>
                   <br />
-                  <span class="text-caption">{{pincode}}</span>
+                  <span class="text-caption">{{ pincode }}</span>
                   <br />
-                  <span class="text-caption">{{phone}}</span>
+                  <span class="text-caption">{{ phone }}</span>
                   <br />
-                  <span class="text-caption">{{email}}</span>
+                  <span class="text-caption">{{ email }}</span>
                 </div>
                 <div>
                   <br />
                   <span>Delivery Details</span>
                   <v-chip class="ma-2" small color="accent" label outlined>
-                    <v-icon
-                      left
-                    >{{delivery_type == 'Standard Delivery' ? 'mdi-truck' : 'mdi-truck-fast'}}</v-icon>
-                    {{delivery_type}}
+                    <v-icon left>{{
+                      delivery_type == "Standard Delivery"
+                        ? "mdi-truck"
+                        : "mdi-truck-fast"
+                    }}</v-icon>
+                    {{ delivery_type }}
                   </v-chip>
                 </div>
                 <div>
                   <span class="text-caption">
-                    Expect Delivery Within
-                    <b>{{delivery_type == "Standard Delivery" ? standard_shipping_days : express_shipping_days}}</b> Days
-                    by
-                    <b>{{delivery_date(delivery_type == "Standard Delivery" ? standard_shipping_days : express_shipping_days)}}</b>
+                    *Expect Delivery Within
+                    <b>{{
+                      delivery_type == "Standard Delivery"
+                        ? standard_shipping_days
+                        : express_shipping_days
+                    }}</b>
+                    Days by
+                    <b>{{
+                      delivery_date(
+                        delivery_type == "Standard Delivery"
+                          ? standard_shipping_days
+                          : express_shipping_days
+                      )
+                    }}</b>
                   </span>
                   <br />
                 </div>
@@ -293,16 +385,19 @@
                   <br />
                   <span>Payment Method</span>
                   <v-chip class="ma-2" small color="accent" label outlined>
-                    <v-icon
-                      left
-                    >{{payment_mode == 'Cash On Delivery' ? 'mdi-cash-100' : 'mdi-credit-card-outline'}}</v-icon>
-                    {{payment_mode}}
+                    <v-icon left>{{
+                      payment_mode == "Cash On Delivery"
+                        ? "mdi-cash-100"
+                        : "mdi-credit-card-outline"
+                    }}</v-icon>
+                    {{ payment_mode }}
                   </v-chip>
                 </div>
                 <div>
-                  <span
-                    class="text-caption"
-                  >Please be ready with the exact amount handy (loose change, if any) to avoid payment hassles.</span>
+                  <span class="text-caption"
+                    >Please be ready with the exact amount handy (loose change,
+                    if any) to avoid payment hassles.</span
+                  >
 
                   <br />
                 </div>
@@ -316,19 +411,21 @@
                   <div>
                     <span class="text-caption">To,</span>
                     <br />
-                    <span class="text-caption">{{firstname}} {{lastname}},</span>
+                    <span class="text-caption"
+                      >{{ firstname }} {{ lastname }},</span
+                    >
                     <br />
-                    <span class="text-caption">{{street_address}}</span>
+                    <span class="text-caption">{{ street_address }}</span>
                     <br />
-                    <span class="text-caption">{{city}}, {{state}},</span>
+                    <span class="text-caption">{{ city }}, {{ state }},</span>
                     <br />
                     <span class="text-caption">India</span>
                     <br />
-                    <span class="text-caption">{{pincode}}</span>
+                    <span class="text-caption">{{ pincode }}</span>
                     <br />
-                    <span class="text-caption">{{phone}}</span>
+                    <span class="text-caption">{{ phone }}</span>
                     <br />
-                    <span class="text-caption">{{email}}</span>
+                    <span class="text-caption">{{ email }}</span>
                   </div>
                 </div>
                 <div>
@@ -336,18 +433,30 @@
                     <br />
                     <span>Delivery Details</span>
                     <v-chip class="ma-2" small color="accent" label outlined>
-                      <v-icon
-                        left
-                      >{{delivery_type == 'Standard Delivery' ? 'mdi-truck' : 'mdi-truck-fast'}}</v-icon>
-                      {{delivery_type}}
+                      <v-icon left>{{
+                        delivery_type == "Standard Delivery"
+                          ? "mdi-truck"
+                          : "mdi-truck-fast"
+                      }}</v-icon>
+                      {{ delivery_type }}
                     </v-chip>
                   </div>
                   <div>
                     <span class="text-caption">
-                      Expect Delivery Within
-                      <b>{{delivery_type == "Standard Delivery" ? standard_shipping_days : express_shipping_days}}</b> Days
-                      by
-                      <b>{{delivery_date(delivery_type == "Standard Delivery" ? standard_shipping_days : express_shipping_days)}}</b>
+                      *Expect Delivery Within
+                      <b>{{
+                        delivery_type == "Standard Delivery"
+                          ? standard_shipping_days
+                          : express_shipping_days
+                      }}</b>
+                      Days by
+                      <b>{{
+                        delivery_date(
+                          delivery_type == "Standard Delivery"
+                            ? standard_shipping_days
+                            : express_shipping_days
+                        )
+                      }}</b>
                     </span>
                     <br />
                   </div>
@@ -355,16 +464,19 @@
                     <br />
                     <span>Payment Method</span>
                     <v-chip class="ma-2" small color="accent" label outlined>
-                      <v-icon
-                        left
-                      >{{payment_mode == 'Cash On Delivery' ? 'mdi-cash-100' : 'mdi-credit-card-outline'}}</v-icon>
-                      {{payment_mode}}
+                      <v-icon left>{{
+                        payment_mode == "Cash On Delivery"
+                          ? "mdi-cash-100"
+                          : "mdi-credit-card-outline"
+                      }}</v-icon>
+                      {{ payment_mode }}
                     </v-chip>
                   </div>
                   <div>
-                    <span
-                      class="text-caption"
-                    >Please be ready with the exact amount handy (loose change, if any) to avoid payment hassles.</span>
+                    <span class="text-caption"
+                      >Please be ready with the exact amount handy (loose
+                      change, if any) to avoid payment hassles.</span
+                    >
 
                     <br />
                   </div>
@@ -569,6 +681,15 @@ export default {
     express_shipping_days() {
       return this.$store.getters.express_shipping_days;
     },
+    loading() {
+      return this.$store.getters.loading;
+    },
+    success() {
+      return this.$store.getters.success;
+    },
+    error() {
+      return this.$store.getters.error;
+    }
   },
   methods: {
     step1() {
@@ -601,8 +722,62 @@ export default {
       return formatted_delivery_date;
     },
     placeOrder() {
-      this.$store.commit("placeOrder");
-      this.$router.replace("/order");
+      // console.log(this.cart)
+      let order = {};
+      order.firstname = this.firstname;
+      order.lastname = this.lastname;
+      order.email = this.email;
+      order.phone = this.phone;
+      order.street_address = this.street_address;
+      order.city = this.city;
+      order.state - this.state;
+      order.pincode = this.pincode;
+
+      order.payment_mode = this.payment_mode;
+      order.delivery_type = this.delivery_type;
+
+      order.expected_delivery_date = this.delivery_date(
+        this.delivery_type == "Standard Delivery"
+          ? this.standard_shipping_days
+          : this.express_shipping_days
+      );
+
+      order.cart_total_price =
+        this.cartTotalPrice +
+        (this.delivery_type == "Standard Delivery"
+          ? this.standard_shipping_fee
+          : this.express_shipping_fee);
+      order.cart_total_quantity = this.cartTotalQuantity;
+      order.products = [];
+      this.cart.forEach((element) => {
+        let item = element;
+        delete item.description;
+        delete item.imgs;
+        delete item.rated_by_people;
+        delete item.rating;
+        delete item.selected_product_weight;
+        let h = element.weight_price;
+        delete h.id;
+        delete h.show;
+        delete h.temporary_quantity;
+        item.weight_price = h;
+        order.products.push(item);
+      });
+      console.log(order);
+      this.$store.dispatch("placeOrder", order);
+      // this.$router.replace("/order");
+    },
+  },
+  watch: {
+    error(err) {
+      if (!!err) {
+        setTimeout(() => this.$store.commit("clearError"), 3000);
+      }
+    },
+    success(con) {
+      if (!!con) {
+        setTimeout(() => this.$store.commit("clearSuccess"), 4000);
+      }
     },
   },
 };
