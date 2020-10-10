@@ -1,7 +1,15 @@
 <template>
   <div>
-    <alert-component v-if="error" :text="error.message" :color="'error'"></alert-component>
-    <alert-component v-if="success" :text="success.message" :color="'success'"></alert-component>
+    <alert-component
+      v-if="error"
+      :text="error.message"
+      :color="'error'"
+    ></alert-component>
+    <alert-component
+      v-if="success"
+      :text="success.message"
+      :color="'success'"
+    ></alert-component>
     <v-dialog v-model="visibility" max-width="700">
       <v-card class="elevation-12">
         <v-container fluid>
@@ -11,8 +19,8 @@
                 <div>
                   <span class="font-weight-light text-h6">
                     You have
-                    <span class="font-weight-regular">{{items_in_cart}}</span>
-                    {{items_in_cart == 1 ? "item" : "items"}} in your cart
+                    <span class="font-weight-regular">{{ items_in_cart }}</span>
+                    {{ items_in_cart == 1 ? "item" : "items" }} in your cart
                   </span>
                 </div>
                 <div v-if="!$vuetify.breakpoint.xs">
@@ -23,22 +31,41 @@
                     hide-default-footer
                     class="elevation-0"
                   >
-                  <template v-slot:item.weight="{ item }">
-                      <span>{{item.weight_price.weight}}</span>
+                    <template v-slot:item.weight="{ item }">
+                      <span>{{ item.weight_price.weight }}</span>
                     </template>
                     <template v-slot:item.cart_quantity="{ item }">
-                      <v-icon small color="error" @click="decreaseQuantity(item)">mdi-minus</v-icon>
-                      <span>&nbsp;{{item.weight_price.cart_quantity}}&nbsp;</span>
-                      <v-icon small color="success" @click="increaseQuantity(item)">mdi-plus</v-icon>
+                      <v-icon
+                        small
+                        color="error"
+                        @click="decreaseQuantity(item)"
+                        >mdi-minus</v-icon
+                      >
+                      <span
+                        >&nbsp;{{ item.weight_price.cart_quantity }}&nbsp;</span
+                      >
+                      <v-icon
+                        small
+                        color="success"
+                        @click="increaseQuantity(item)"
+                        >mdi-plus</v-icon
+                      >
                     </template>
                     <template v-slot:item.sale_price="{ item }">
-                      <span>₹{{item.weight_price.sale_price}}</span>
+                      <span>₹{{ item.weight_price.sale_price }}</span>
                     </template>
                     <template v-slot:item.delete="{ item }">
-                      <v-icon small color="error" @click="deleteFromCart(item)">mdi-delete</v-icon>
+                      <v-icon small color="error" @click="deleteFromCart(item)"
+                        >mdi-delete</v-icon
+                      >
                     </template>
                     <template v-slot:item.subtotal="{ item }">
-                      <span>₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}</span>
+                      <span
+                        >₹{{
+                          item.weight_price.sale_price *
+                          item.weight_price.cart_quantity
+                        }}</span
+                      >
                     </template>
                     <template v-slot:body.append="{ headers }">
                       <tr>
@@ -46,12 +73,12 @@
                         <td :colspan="2">
                           <b>Totals</b>
                         </td>
-                        <td :colspan="1" style="text-align:center">
-                          <b>{{cartTotalQuantity}}</b>
+                        <td :colspan="1" style="text-align: center">
+                          <b>{{ cartTotalQuantity }}</b>
                         </td>
-                        <td :colspan="1" style="text-align:center"></td>
-                        <td :colspan="1" style="text-align:center">
-                          <b>₹{{cartTotalPrice}}</b>
+                        <td :colspan="1" style="text-align: center"></td>
+                        <td :colspan="1" style="text-align: center">
+                          <b>₹{{ cartTotalPrice }}</b>
                         </td>
                       </tr>
                     </template>
@@ -61,16 +88,31 @@
                   </div>
                 </div>
                 <div v-else>
-                  <v-card class="mx-auto" max-width="344" v-for="(item,i) in cart" :key="i" flat>
+                  <v-card
+                    class="mx-auto"
+                    max-width="344"
+                    v-for="(item, i) in cart"
+                    :key="i"
+                    flat
+                  >
                     <v-card-actions>
-                      <span class="text-button">{{item.name}}</span>
+                      <span class="text-button">{{ item.name }}</span>
 
                       <v-spacer></v-spacer>
 
-                      <span class="text-button">₹{{item.weight_price.sale_price * item.weight_price.cart_quantity}}&nbsp;</span>
+                      <span class="text-button"
+                        >₹{{
+                          item.weight_price.sale_price *
+                          item.weight_price.cart_quantity
+                        }}&nbsp;</span
+                      >
 
                       <v-btn icon @click="toggleItemVisibility(item)">
-                        <v-icon>{{ item.weight_price.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                        <v-icon>{{
+                          item.weight_price.show
+                            ? "mdi-chevron-up"
+                            : "mdi-chevron-down"
+                        }}</v-icon>
                       </v-btn>
                     </v-card-actions>
 
@@ -81,19 +123,38 @@
                         <v-card-text>
                           <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Price</span>
-                            <span>₹{{item.weight_price.sale_price}}</span>
+                            <span>₹{{ item.weight_price.sale_price }}</span>
+                          </div>
+                          <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Weight</span>
-                            <span>₹{{item.weight_price.weight}}</span>
+                            <span>₹{{ item.weight_price.weight }}</span>
                           </div>
                           <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Quantity</span>
                             <span class="text-subtitle-1"></span>
-                            <v-icon small color="error" @click="decreaseQuantity(item)">mdi-minus</v-icon>
-                            <span>&nbsp;{{item.weight_price.cart_quantity}}&nbsp;</span>
-                            <v-icon small color="success" @click="increaseQuantity(item)">mdi-plus</v-icon>
+                            <v-icon
+                              small
+                              color="error"
+                              @click="decreaseQuantity(item)"
+                              >mdi-minus</v-icon
+                            >
+                            <span
+                              >&nbsp;{{
+                                item.weight_price.cart_quantity
+                              }}&nbsp;</span
+                            >
+                            <v-icon
+                              small
+                              color="success"
+                              @click="increaseQuantity(item)"
+                              >mdi-plus</v-icon
+                            >
                           </div>
                           <br />
-                          <div class="d-flex justify-space-around" @click="deleteFromCart(item)">
+                          <div
+                            class="d-flex justify-space-around"
+                            @click="deleteFromCart(item)"
+                          >
                             <v-btn class="error">
                               <v-icon left>mdi-delete</v-icon>Remove From Cart
                             </v-btn>
@@ -106,22 +167,30 @@
                     <span>
                       <b>Cart Total:</b>
                     </span>
-                    <span class="success--text">₹{{cartTotalPrice}}</span>
+                    <span class="success--text">₹{{ cartTotalPrice }}</span>
                   </div>
                   <br />
                   <div>
-                    <v-btn block @click="checkout()" class="accent">Checkout</v-btn>
+                    <v-btn block @click="checkout()" class="accent"
+                      >Checkout</v-btn
+                    >
                   </div>
                 </div>
               </div>
               <div v-else class="text-center">
-                <span class="font-weight-light text-h6">YOUR CART IS EMPTY</span>
+                <span class="font-weight-light text-h6"
+                  >YOUR CART IS EMPTY</span
+                >
                 <br />
                 <br />
                 <v-icon size="100">mdi-cart-outline</v-icon>
                 <br />
                 <br />
-                <span class="font-weight-light text-button" style="font-size:40px">Please add some items first</span>
+                <span
+                  class="font-weight-light text-button"
+                  style="font-size: 40px"
+                  >Please add some items first</span
+                >
               </div>
             </v-col>
           </v-row>
@@ -204,7 +273,7 @@ export default {
     },
     error() {
       return this.$store.getters.error;
-    }
+    },
   },
   methods: {
     increaseQuantity(productData) {
