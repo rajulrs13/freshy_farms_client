@@ -82,6 +82,8 @@
                           <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Price</span>
                             <span>₹{{item.weight_price.sale_price}}</span>
+                            <span class="text-subtitle-1">Weight</span>
+                            <span>₹{{item.weight_price.weight}}</span>
                           </div>
                           <div class="d-flex justify-space-between">
                             <span class="text-subtitle-1">Quantity</span>

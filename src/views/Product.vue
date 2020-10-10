@@ -268,12 +268,12 @@
                     <v-icon left>mdi-delete</v-icon>Remove
                   </v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn class="accent" @click="addToCart()">
+                  <v-btn class="accent" @click="addToCart('add')">
                     <v-icon left>mdi-sync</v-icon>Update
                   </v-btn>
                 </div>
                 <div v-else>
-                  <v-btn block class="accent" @click="addToCart()">
+                  <v-btn block class="accent" @click="addToCart('update')">
                     <v-icon left>mdi-cart-plus</v-icon>Add To Cart
                   </v-btn>
                 </div>
