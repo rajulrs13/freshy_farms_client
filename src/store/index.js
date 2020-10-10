@@ -1121,12 +1121,17 @@ export default new Vuex.Store({
     clearSuccess(state) {
       state.success = null;
     },
+    clearSuccessErrorState(state){
+      state.error = null
+      state.success = null
+    }
   },
   actions: {
     addToCart({ commit }, payload) {
       console.log(payload)
       if (payload.action == "add") {
         commit("addToCart", payload.productData);
+        commit("clearSuccessErrorState");
         commit("setSuccess", {
           message: payload.productData.name + "["+ payload.productData.weight_price[payload.productData.selected_product_weight].weight+"] added to Cart",
           status: true,
@@ -1134,12 +1139,14 @@ export default new Vuex.Store({
         setTimeout(() => commit("clearSuccess"), 2000);
       } else {
         commit("addToCart", payload.productData);
+        commit("clearSuccessErrorState");
         commit("setSuccess", { message: "Cart Updated", status: true });
         setTimeout(() => commit("clearSuccess"), 1000);
       }
     },
     deleteFromCart({ commit }, payload) {
       commit("deleteFromCart", payload);
+      commit("clearSuccessErrorState");
       commit("setError", {
         message: payload.name + "["+ payload.weight_price[payload.selected_product_weight].weight+"] removed from Cart",
         status: true,
@@ -1149,6 +1156,7 @@ export default new Vuex.Store({
     deleteFromActualCart({ commit }, payload) {
       console.log(payload)
       commit("deleteFromActualCart", payload);
+      commit("clearSuccessErrorState");
       commit("setError", {
         message: payload.name + "["+ payload.weight_price.weight+"] removed from Cart",
         status: true,
@@ -1169,6 +1177,7 @@ export default new Vuex.Store({
           console.log("Order Placed with Unique Order ID: ", docRef.id);
           commit("placeOrder", docRef.id);
           commit('setLoading', false)
+          commit("clearSuccessErrorState");
           router.replace("/order");
           commit("setSuccess", {
             message: "Order Placed Successfully",
@@ -1179,6 +1188,7 @@ export default new Vuex.Store({
         .catch(function(error) {
           console.error("Could not place your order. Please try again.", error);
           commit('setLoading', false)
+          commit("clearSuccessErrorState");
           commit("setError", {
             message: "Could not place your order. Please try again",
             status: true,
