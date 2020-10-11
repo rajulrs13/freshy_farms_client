@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { db } from "@/plugins/firebase";
+import { auth, db } from "@/plugins/firebase";
 import * as firebase from "firebase/app";
 import router from "../router";
 
@@ -1183,27 +1183,51 @@ export default new Vuex.Store({
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         order_status: 0,
       };
-      db.collection("orders")
-        .add(order)
-        .then(function(docRef) {
-          commit("placeOrder", docRef.id);
-          commit("setLoading", false);
-          commit("clearSuccessErrorState");
-          router.replace("/order");
-          commit("setSuccess", {
-            message: "Order Placed Successfully",
-            status: true,
-          });
-          setTimeout(() => commit("clearSuccess"), 4000);
+      firebase
+        .auth()
+        .signInAnonymously()
+        .then(() => {
+          db.collection("orders")
+            .add(order)
+            .then(function(docRef) {
+              commit("placeOrder", docRef.id);
+              commit("setLoading", false);
+              commit("clearSuccessErrorState");
+
+              firebase
+                .auth()
+                .signOut()
+                .catch(function(error) {
+                  commit("setLoading", false);
+                  commit("setError", {
+                    message: "Something Went Wrong",
+                    status: true,
+                  });
+                  setTimeout(() => commit("clearError"), 3000);
+                });
+
+              router.replace("/order");
+              commit("setSuccess", {
+                message: "Order Placed Successfully",
+                status: true,
+              });
+              setTimeout(() => commit("clearSuccess"), 4000);
+            })
+            .catch(function(error) {
+              commit("setLoading", false);
+              commit("clearSuccessErrorState");
+              commit("setError", {
+                message: "Could not place your order. Please try again",
+                status: true,
+              });
+              setTimeout(() => commit("clearError"), 4000);
+            });
         })
         .catch(function(error) {
-          commit("setLoading", false);
-          commit("clearSuccessErrorState");
-          commit("setError", {
-            message: "Could not place your order. Please try again",
-            status: true,
-          });
-          setTimeout(() => commit("clearError"), 4000);
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
         });
     },
   },
