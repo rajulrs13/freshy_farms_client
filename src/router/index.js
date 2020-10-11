@@ -62,8 +62,6 @@ function orderPlacedCheck (to, from, next) {
   }
 }
 function backHome (to, from, next) {
-  console.log("going home")
-  console.log("order status", store.getters.order_placed)
   if (store.getters.order_placed) { /// THIS NOT WORK, HOW TO ACCESS STORE?
     store.commit("resetOrderState");
     next()
