@@ -758,7 +758,6 @@ export default {
         delete item.selected_product_weight;
         let h = element.weight_price;
         delete h.id;
-        delete h.show;
         delete h.temporary_quantity;
         item.weight_price = h;
         order.products.push(item);
