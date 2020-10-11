@@ -512,7 +512,7 @@ export default {
         pincode: (value) => value.length == 6 || "Invalid Pincode",
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "Invalid E-Mail.";
+          return pattern.test(value) || "Invalid E-Mail";
         },
       },
 
@@ -758,6 +758,7 @@ export default {
         delete item.selected_product_weight;
         let h = element.weight_price;
         delete h.id;
+        delete h.show;
         delete h.temporary_quantity;
         item.weight_price = h;
         order.products.push(item);
