@@ -35,7 +35,7 @@
           </v-tab>
 
           <v-tab href="#tab-3">
-            Honey
+            Breakfast
             <v-icon>mdi-bee-flower</v-icon>
           </v-tab>
           <v-tab href="#tab-4">

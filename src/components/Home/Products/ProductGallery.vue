@@ -100,7 +100,7 @@ export default {
       } else if (this.category == 2) {
         return this.$store.getters.products_by_category_dry_fruit;
       } else if (this.category == 3) {
-        return this.$store.getters.products_by_category_honey;
+        return this.$store.getters.products_by_category_breakfast;
       } else if (this.category == 4) {
         return this.$store.getters.products_by_category_combo;
       }

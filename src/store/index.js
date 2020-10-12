@@ -235,8 +235,8 @@ export default new Vuex.Store({
             temporary_quantity: 1,
             show: false,
             weight: "50g",
-            cost_price: 80,
-            sale_price: 90,
+            cost_price: 90,
+            sale_price: 80,
           },
           {
             id: 1,
@@ -638,8 +638,99 @@ export default new Vuex.Store({
           },
         ],
       },
+      
+
+      // Breakfast
       {
         id: 15,
+        imgs: [
+          "https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2019/05/Baby-dies-honey-769796297.jpg",
+        ],
+        name: "Honey",
+        description:
+          "Honey is a sweet, viscous food substance made by honey bees. The variety of honey produced by honey bees (the genus Apis) is the best-known, due to its worldwide commercial production and human consumption. Honey is collected from wild bee colonies, or from hives of domesticated bees, a practice known as beekeeping or apiculture.",
+
+        in_stock: false,
+        rating: 4.0,
+        rated_by_people: 413,
+        category: "breakfast",
+        selected_product_weight: 0,
+        weight_price: [
+          {
+            id: 0,
+            cart_quantity: 0,
+            temporary_quantity: 1,
+            show: false,
+            weight: "250g",
+            cost_price: 300,
+            sale_price: 300,
+          },
+          {
+            id: 1,
+            cart_quantity: 0,
+            temporary_quantity: 1,
+            show: false,
+            weight: "500g",
+            cost_price: 550,
+            sale_price: 550,
+          },
+          {
+            id: 2,
+            cart_quantity: 0,
+            temporary_quantity: 1,
+            show: false,
+            weight: "1kg",
+            cost_price: 1000,
+            sale_price: 1000,
+          },
+        ],
+      },
+      {
+        id: 16,
+        imgs: [
+          "https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2019/05/Baby-dies-honey-769796297.jpg",
+        ],
+        name: "Peanut Butter",
+        description:
+          "Honey is a sweet, viscous food substance made by honey bees. The variety of honey produced by honey bees (the genus Apis) is the best-known, due to its worldwide commercial production and human consumption. Honey is collected from wild bee colonies, or from hives of domesticated bees, a practice known as beekeeping or apiculture.",
+
+        in_stock: false,
+        rating: 4.0,
+        rated_by_people: 413,
+        category: "breakfast",
+        selected_product_weight: 0,
+        weight_price: [
+          {
+            id: 0,
+            cart_quantity: 0,
+            temporary_quantity: 1,
+            show: false,
+            weight: "250g",
+            cost_price: 300,
+            sale_price: 300,
+          },
+          {
+            id: 1,
+            cart_quantity: 0,
+            temporary_quantity: 1,
+            show: false,
+            weight: "500g",
+            cost_price: 550,
+            sale_price: 550,
+          },
+          {
+            id: 2,
+            cart_quantity: 0,
+            temporary_quantity: 1,
+            show: false,
+            weight: "1kg",
+            cost_price: 1000,
+            sale_price: 1000,
+          },
+        ],
+      },
+      {
+        id: 17,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Fruit Mix",
         description:
@@ -648,7 +739,7 @@ export default new Vuex.Store({
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        category: "dry fruit",
+        category: "breakfast",
         selected_product_weight: 0,
         weight_price: [
           {
@@ -681,7 +772,7 @@ export default new Vuex.Store({
         ],
       },
       {
-        id: 16,
+        id: 18,
         imgs: ["https://scx2.b-cdn.net/gfx/news/2016/57eb8d537c4b3.jpg"],
         name: "Breakfast Mix",
         description:
@@ -690,53 +781,7 @@ export default new Vuex.Store({
         in_stock: true,
         rating: 4.1,
         rated_by_people: 523,
-        category: "dry fruit",
-        selected_product_weight: 0,
-        weight_price: [
-          {
-            id: 0,
-            cart_quantity: 0,
-            temporary_quantity: 1,
-            show: false,
-            weight: "250g",
-            cost_price: 300,
-            sale_price: 300,
-          },
-          {
-            id: 1,
-            cart_quantity: 0,
-            temporary_quantity: 1,
-            show: false,
-            weight: "500g",
-            cost_price: 550,
-            sale_price: 550,
-          },
-          {
-            id: 2,
-            cart_quantity: 0,
-            temporary_quantity: 1,
-            show: false,
-            weight: "1kg",
-            cost_price: 1000,
-            sale_price: 1000,
-          },
-        ],
-      },
-
-      // Honey
-      {
-        id: 17,
-        imgs: [
-          "https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2019/05/Baby-dies-honey-769796297.jpg",
-        ],
-        name: "Honey",
-        description:
-          "Honey is a sweet, viscous food substance made by honey bees. The variety of honey produced by honey bees (the genus Apis) is the best-known, due to its worldwide commercial production and human consumption. Honey is collected from wild bee colonies, or from hives of domesticated bees, a practice known as beekeeping or apiculture.",
-
-        in_stock: false,
-        rating: 4.0,
-        rated_by_people: 413,
-        category: "honey",
+        category: "breakfast",
         selected_product_weight: 0,
         weight_price: [
           {
@@ -771,7 +816,7 @@ export default new Vuex.Store({
 
       // Combos
       {
-        id: 18,
+        id: 19,
         imgs: [
           "https://cdn.britannica.com/83/191983-050-9D97C943/saffron-spice-herb.jpg",
         ],
@@ -876,10 +921,10 @@ export default new Vuex.Store({
       });
       return category_prods;
     },
-    products_by_category_honey(state) {
+    products_by_category_breakfast(state) {
       let prods = state.products;
       let category_prods = prods.filter(function(e) {
-        return e.category == "honey";
+        return e.category == "breakfast";
       });
       return category_prods;
     },
